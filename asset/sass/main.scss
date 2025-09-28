@@ -1,9 +1,0 @@
-// MAIN.SCSS - File chính để import tất cả các partial files
-
-// 1. Import Helpers trước (variables, mixins)
-@import 'Helpers/variables';
-
-// 2. Import Pages (chứa styles cho từng trang)
-@import 'Pages/home';
-@import 'Pages/admin';
-@import 'Pages/customers';
