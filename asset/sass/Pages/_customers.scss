@@ -1,0 +1,164 @@
+// CUSTOMERS PAGE STYLES
+// Styles riêng cho trang customers (danh sách sản phẩm, giỏ hàng)
+// Chỉ áp dụng khi body có class "customers-page"
+
+body.customers-page {
+  // Container chứa danh sách sản phẩm
+  .customers-container {
+    padding: $spacing-lg;
+    background-color: $light-color;
+    min-height: 100vh;
+
+    .page-title {
+      color: $primary-color;
+      font-size: $font-size-xl;
+      font-weight: 600;
+      margin-bottom: $spacing-lg;
+      text-align: center;
+    }
+  }
+
+  // Grid layout cho danh sách sản phẩm
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: $spacing-md;
+    }
+  }
+
+  // Card sản phẩm trong trang customer
+  .product-card {
+    background: white;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: $spacing-md;
+
+      .product-name {
+        font-size: $font-size-large;
+        font-weight: 600;
+        color: $dark-color;
+        margin-bottom: $spacing-sm;
+      }
+
+      .product-price {
+        font-size: $font-size-large;
+        font-weight: 700;
+        color: $primary-color;
+        margin-bottom: $spacing-md;
+      }
+
+      .product-description {
+        font-size: $font-size-small;
+        color: $secondary-color;
+        margin-bottom: $spacing-md;
+        line-height: 1.5;
+      }
+    }
+
+    .product-actions {
+      padding: $spacing-md;
+      border-top: 1px solid #e9ecef;
+
+      .add-to-cart-btn {
+        width: 100%;
+        background-color: $success-color;
+        color: white;
+        border: none;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $border-radius;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken($success-color, 10%);
+        }
+
+        &:disabled {
+          background-color: $secondary-color;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  // Giỏ hàng floating
+  .cart-floating {
+    position: fixed;
+    bottom: $spacing-lg;
+    right: $spacing-lg;
+    background-color: $primary-color;
+    color: white;
+    border-radius: 50px;
+    padding: $spacing-md $spacing-lg;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    .cart-count {
+      background-color: $danger-color;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      margin-left: $spacing-sm;
+    }
+  }
+
+  // Filter section
+  .product-filters {
+    background: white;
+    padding: $spacing-lg;
+    border-radius: $border-radius-lg;
+    margin-bottom: $spacing-lg;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    .filter-group {
+      display: flex;
+      gap: $spacing-md;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .filter-label {
+        font-weight: 600;
+        color: $dark-color;
+      }
+
+      select, input {
+        padding: $spacing-sm;
+        border: 1px solid #ddd;
+        border-radius: $border-radius;
+        font-size: $font-size-base;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+  }
+}
