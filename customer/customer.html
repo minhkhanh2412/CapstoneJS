@@ -3,86 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khách Hàng - Cửa Hàng Giày</title>
-    <!-- Sử dụng cùng file CSS -->
+    <title>Khách Hàng - Cửa Hàng Điện Thoại</title>
+    <!-- CSS -->
     <link rel="stylesheet" href="../asset/css/main.css">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Loading Style -->
+    <style>
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 18px;
+        }
+        .product-modal, .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<!-- Thêm class "customers-page" vào body -->
 <body class="customers-page">
+    <!-- Loading -->
+    <div id="loading">Đang tải...</div>
     
     <div class="customers-container">
-        <h1 class="page-title">Cửa Hàng Giày</h1>
+        <h1 class="page-title">Cửa Hàng Điện Thoại</h1>
         
-        <!-- Filter section -->
+        <!-- Controls -->
         <div class="product-filters">
             <div class="filter-group">
-                <span class="filter-label">Lọc theo:</span>
-                <select>
-                    <option value="">Tất cả</option>
-                    <option value="nike">Nike</option>
-                    <option value="adidas">Adidas</option>
-                    <option value="vans">Vans</option>
+                <span class="filter-label">📱 Loại:</span>
+                <select id="typeFilter" onchange="filterByType(this.value)">
+                    <option value="">Tất cả sản phẩm</option>
+                    <option value="iphone">🍎 iPhone</option>
+                    <option value="Samsung">📱 Samsung</option>
                 </select>
                 
-                <input type="range" min="500000" max="5000000" placeholder="Giá từ...">
-                <span class="filter-label">Tìm kiếm:</span>
-                <input type="text" placeholder="Tên sản phẩm...">
+                <span class="filter-label">🔍 Tìm kiếm:</span>
+                <input type="search" id="searchInput" placeholder="Nhập tên điện thoại để tìm kiếm..." onkeyup="searchProducts()">
             </div>
         </div>
 
-        <!-- Product Grid -->
-        <div class="product-grid">
-            <!-- Sample Product 1 -->
-            <div class="product-card">
-                <img src="https://via.placeholder.com/280x200" alt="Nike Air Max" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-name">Nike Air Max 270</h3>
-                    <p class="product-price">2,500,000 VND</p>
-                    <p class="product-description">Giày thể thao Nike Air Max với thiết kế hiện đại và thoải mái.</p>
-                </div>
-                <div class="product-actions">
-                    <button class="add-to-cart-btn">Thêm vào giỏ hàng</button>
-                </div>
-            </div>
-
-            <!-- Sample Product 2 -->
-            <div class="product-card">
-                <img src="https://via.placeholder.com/280x200" alt="Adidas Ultraboost" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-name">Adidas Ultraboost 22</h3>
-                    <p class="product-price">3,200,000 VND</p>
-                    <p class="product-description">Giày chạy bộ cao cấp với công nghệ đệm tiên tiến.</p>
-                </div>
-                <div class="product-actions">
-                    <button class="add-to-cart-btn">Thêm vào giỏ hàng</button>
-                </div>
-            </div>
-
-            <!-- Sample Product 3 -->
-            <div class="product-card">
-                <img src="https://via.placeholder.com/280x200" alt="Vans Old Skool" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-name">Vans Old Skool</h3>
-                    <p class="product-price">1,800,000 VND</p>
-                    <p class="product-description">Giày sneaker cổ điển với phong cách streetwear.</p>
-                </div>
-                <div class="product-actions">
-                    <button class="add-to-cart-btn">Thêm vào giỏ hàng</button>
-                </div>
+        <!-- Product Grid Container -->
+        <div id="product-grid-container">
+            <div class="product-grid">
+                <!-- Sản phẩm sẽ được load từ API -->
             </div>
         </div>
+
+        <!-- Pagination -->
+        <div id="pagination"></div>
     </div>
 
     <!-- Floating Cart -->
-    <div class="cart-floating">
+    <div class="cart-floating" onclick="showCart()">
         🛒 Giỏ hàng <span class="cart-count">0</span>
     </div>
 
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
     <!-- Back to Home -->
-    <div style="position: fixed; top: 20px; left: 20px;">
-        <a href="../index.html" style="color: #007bff; text-decoration: none;">← Trang chủ</a>
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../index.html" style="background: rgba(0,123,255,0.9); color: white; text-decoration: none; padding: 10px 15px; border-radius: 25px; backdrop-filter: blur(10px); font-weight: 600;">← Trang chủ</a>
     </div>
 
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Load services và logic -->
+    <script src="../asset/js/services/productService.js"></script>
+    <script src="../asset/js/services/cartService.js"></script>
     <script src="../asset/js/pages/customer.js"></script>
 </body>
 </html>

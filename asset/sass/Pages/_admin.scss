@@ -1,28 +1,35 @@
-// ADMIN PAGE STYLES
+// === ADMIN PAGE STYLES ===
 // Styles riêng cho trang admin (quản lý sản phẩm)
-// Chỉ áp dụng khi body có class "admin-page"
+// Sử dụng hệ thống mixin và variables mới
 
 body.admin-page {
+  font-family: $font-family-primary;
+
+  // === MAIN CONTAINER ===
   .admin-container {
     display: flex;
+    flex-direction: row;
     min-height: 100vh;
-    background-color: #f5f5f5;
+    background-color: $light-color;
   }
 
-  // Sidebar admin
+  // === SIDEBAR ===
   .admin-sidebar {
     width: 250px;
     background-color: $dark-color;
-    color: white;
+    color: $white;
     padding: $spacing-lg;
+    flex-shrink: 0;
 
     .admin-logo {
       text-align: center;
       margin-bottom: $spacing-xl;
       
       h2 {
-        color: white;
-        font-size: $font-size-xl;
+        color: $white;
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        margin: 0;
       }
     }
 
@@ -36,204 +43,192 @@ body.admin-page {
 
         a {
           display: block;
-          color: #ccc;
+          color: lighten($secondary-color, 20%);
           text-decoration: none;
           padding: $spacing-sm $spacing-md;
           border-radius: $border-radius;
-          transition: all 0.3s ease;
+          transition: $transition-base;
 
           &:hover, &.active {
             background-color: $primary-color;
-            color: white;
+            color: $white;
+            transform: translateX(5px);
           }
         }
       }
     }
   }
 
-  // Main content area
+  // === MAIN CONTENT ===
   .admin-main {
     flex: 1;
     padding: $spacing-lg;
 
     .admin-header {
-      background: white;
+      @include card-base($white, true);
       padding: $spacing-lg;
-      border-radius: $border-radius-lg;
       margin-bottom: $spacing-lg;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
       .page-title {
-        color: $dark-color;
-        font-size: $font-size-xl;
-        font-weight: 600;
+        @include gradient-text($primary-color, $info-color);
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-semibold;
         margin: 0;
       }
     }
   }
 
-  // Admin controls
+  // === ADMIN CONTROLS ===
   .admin-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: $spacing-lg;
-    background: white;
+    @include card-base($white, true);
     padding: $spacing-md;
-    border-radius: $border-radius-lg;
 
     .search-box {
       flex: 1;
       max-width: 300px;
 
       input {
-        width: 100%;
-        padding: $spacing-sm $spacing-md;
-        border: 1px solid #ddd;
-        border-radius: $border-radius;
-        font-size: $font-size-base;
+        @include form-input();
+        transition: $transition-base;
 
-        &:focus {
-          outline: none;
-          border-color: $primary-color;
+        &:hover {
+          border-color: lighten($primary-color, 20%);
         }
       }
     }
 
     .add-product-btn {
-      background-color: $success-color;
-      color: white;
-      border: none;
-      padding: $spacing-sm $spacing-lg;
-      border-radius: $border-radius;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
+      @include button-base($success-color, $white, 1.05);
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
 
       &:hover {
-        background-color: darken($success-color, 10%);
+        background: linear-gradient(135deg, $success-color, $success-light);
       }
     }
   }
 
-  // Product table
+  // === PRODUCTS TABLE ===
   .products-table {
-    background: white;
-    border-radius: $border-radius-lg;
+    @include card-base($white, true);
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
     table {
-      width: 100%;
-      border-collapse: collapse;
+      @include table-base();
 
-      th {
-        background-color: $light-color;
-        padding: $spacing-md;
-        text-align: left;
-        font-weight: 600;
-        color: $dark-color;
-        border-bottom: 1px solid #ddd;
-      }
+      // Enhance table header
+      thead th {
+        background: linear-gradient(135deg, $primary-color, $info-color);
+        color: $white;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: relative;
 
-      td {
-        padding: $spacing-md;
-        border-bottom: 1px solid #eee;
-        vertical-align: middle;
-
-        &:last-child {
-          border-bottom: none;
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, $success-color, $warning-color);
         }
       }
 
-      tr:hover {
-        background-color: #f8f9fa;
-      }
-    }
-
-    .product-image-small {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: $border-radius;
-    }
-
-    .product-actions {
-      display: flex;
-      gap: $spacing-sm;
-
-      .btn-edit {
-        background-color: $info-color;
-        color: white;
-        border: none;
-        padding: $spacing-xs $spacing-sm;
-        border-radius: $border-radius-sm;
-        cursor: pointer;
-        font-size: $font-size-small;
+      // Enhance table rows
+      tbody tr {
+        transition: $transition-base;
 
         &:hover {
-          background-color: darken($info-color, 10%);
+          background: linear-gradient(90deg, rgba($primary-color, 0.05), rgba($info-color, 0.05));
+          transform: translateX(2px);
+          box-shadow: inset 3px 0 0 $primary-color;
         }
       }
 
-      .btn-delete {
-        background-color: $danger-color;
-        color: white;
-        border: none;
-        padding: $spacing-xs $spacing-sm;
-        border-radius: $border-radius-sm;
-        cursor: pointer;
-        font-size: $font-size-small;
+      .product-image-small {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: $border-radius;
+        transition: $transition-base;
 
         &:hover {
-          background-color: darken($danger-color, 10%);
+          transform: scale(1.1);
+          box-shadow: $shadow-lg;
+        }
+      }
+
+      .product-actions {
+        display: flex;
+        gap: $spacing-sm;
+
+        .btn-edit {
+          @include button-base($info-color, $white, 1.02);
+          padding: $spacing-xs $spacing-sm;
+          font-size: $font-size-sm;
+          border-radius: $border-radius-sm;
+        }
+
+        .btn-delete {
+          @include button-base($danger-color, $white, 1.02);
+          padding: $spacing-xs $spacing-sm;
+          font-size: $font-size-sm;
+          border-radius: $border-radius-sm;
         }
       }
     }
   }
 
-  // Form modal cho add/edit sản phẩm
+  // === PRODUCT FORM MODAL ===
   .product-form-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    @include modal-base();
+    z-index: $z-modal;
 
     .modal-content {
-      background: white;
-      padding: $spacing-xl;
-      border-radius: $border-radius-lg;
-      width: 90%;
-      max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
+      @include modal-content(500px);
+      padding: $modal-padding;
 
       .modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-md;
+        border-bottom: 2px solid rgba($primary-color, 0.1);
 
         h3 {
           margin: 0;
-          color: $dark-color;
+          @include gradient-text($primary-color, $info-color);
+          font-weight: $font-weight-bold;
+          font-size: $font-size-xl;
         }
 
         .close-btn {
           background: none;
           border: none;
-          font-size: $font-size-xl;
-          cursor: pointer;
+          font-size: $font-size-2xl;
           color: $secondary-color;
+          cursor: pointer;
+          padding: 0;
+          transition: $transition-base;
+          width: 40px;
+          height: 40px;
+          border-radius: $border-radius-full;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
           &:hover {
-            color: $dark-color;
+            color: $danger-color;
+            background: rgba($danger-color, 0.1);
+            transform: scale(1.1);
           }
         }
       }
@@ -244,26 +239,33 @@ body.admin-page {
         label {
           display: block;
           margin-bottom: $spacing-xs;
-          font-weight: 600;
+          font-weight: $font-weight-semibold;
           color: $dark-color;
+          font-size: $font-size-sm;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
 
         input, textarea, select {
-          width: 100%;
-          padding: $spacing-sm;
-          border: 1px solid #ddd;
-          border-radius: $border-radius;
-          font-size: $font-size-base;
+          @include form-input();
+          transition: $transition-base;
+
+          &:hover {
+            border-color: lighten($primary-color, 20%);
+            transform: translateY(-1px);
+          }
 
           &:focus {
-            outline: none;
-            border-color: $primary-color;
+            border-color: $input-focus-border-color;
+            box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+            transform: translateY(-1px);
           }
         }
 
         textarea {
           height: 100px;
           resize: vertical;
+          font-family: $font-family-primary;
         }
       }
 
@@ -271,49 +273,52 @@ body.admin-page {
         display: flex;
         gap: $spacing-md;
         justify-content: flex-end;
+        margin-top: $spacing-xl;
+        padding-top: $spacing-md;
+        border-top: 1px solid rgba($secondary-color, 0.2);
 
         .btn-cancel {
-          background-color: $secondary-color;
-          color: white;
-          border: none;
-          padding: $spacing-sm $spacing-lg;
-          border-radius: $border-radius;
-          cursor: pointer;
-
-          &:hover {
-            background-color: darken($secondary-color, 10%);
-          }
+          @include button-base($secondary-color, $white, 1.02);
+          order: 1;
         }
 
         .btn-save {
-          background-color: $primary-color;
-          color: white;
-          border: none;
-          padding: $spacing-sm $spacing-lg;
-          border-radius: $border-radius;
-          cursor: pointer;
-
-          &:hover {
-            background-color: darken($primary-color, 10%);
-          }
+          @include button-base($primary-color, $white, 1.02);
+          order: 2;
+          font-weight: $font-weight-bold;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
       }
     }
   }
 
-  // Responsive
-  @media (max-width: $breakpoint-md) {
+  // === RESPONSIVE DESIGN ===
+  @include responsive('md') {
     .admin-container {
       flex-direction: column;
     }
 
     .admin-sidebar {
       width: 100%;
-      order: 2;
+      order: 1;
+      padding: $spacing-md;
+
+      .admin-nav {
+        display: flex;
+        gap: $spacing-sm;
+        overflow-x: auto;
+
+        li {
+          margin-bottom: 0;
+          white-space: nowrap;
+        }
+      }
     }
 
     .admin-main {
-      order: 1;
+      order: 2;
+      padding: $spacing-md;
     }
 
     .admin-controls {
@@ -324,6 +329,69 @@ body.admin-page {
       .search-box {
         max-width: none;
       }
+    }
+
+    .products-table {
+      overflow-x: auto;
+
+      table {
+        min-width: 600px;
+      }
+    }
+  }
+
+  @include responsive('xs') {
+    .admin-main {
+      padding: $spacing-sm;
+    }
+
+    .admin-sidebar {
+      padding: $spacing-sm;
+    }
+
+    .product-form-modal .modal-content {
+      padding: $spacing-lg;
+    }
+  }
+
+  // === LOADING STATE ===
+  &.loading {
+    .products-table {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include loading-spinner(40px, $primary-color);
+        transform: translate(-50%, -50%);
+      }
+
+      table {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    }
+  }
+
+  // === SUCCESS/ERROR STATES ===
+  .alert {
+    padding: $spacing-md;
+    border-radius: $border-radius;
+    margin-bottom: $spacing-md;
+    font-weight: $font-weight-medium;
+
+    &.alert-success {
+      background: linear-gradient(135deg, rgba($success-color, 0.1), rgba($success-color, 0.05));
+      color: $success-color;
+      border: 1px solid rgba($success-color, 0.3);
+    }
+
+    &.alert-error {
+      background: linear-gradient(135deg, rgba($danger-color, 0.1), rgba($danger-color, 0.05));
+      color: $danger-color;
+      border: 1px solid rgba($danger-color, 0.3);
     }
   }
 }

@@ -2,6 +2,7 @@
 
 // 1. Import Helpers trước (variables, mixins)
 @import 'Helpers/variables';
+@import 'Helpers/mixin';
 
 // 2. Import Pages (chứa styles cho từng trang)
 @import 'Pages/home';
