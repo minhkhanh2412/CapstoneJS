@@ -4,9 +4,8 @@
 let cartService = {
   // Lấy danh sách tất cả items trong giỏ hàng
   getList: () => {
-    // console.log("Fetching cart items from:", `${BASE_URL}`);
     return axios({
-      url: `${BASE_URL}/cart`,
+      url: `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CART}`,
       method: "GET",
     });
   },
@@ -14,7 +13,7 @@ let cartService = {
   // Lấy cart item theo ID
   getById: (idCart) => {
     return axios({
-      url: `${BASE_URL}/cart/${idCart}`,
+      url: `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CART}/${idCart}`,
       method: "GET",
     });
   },
@@ -22,7 +21,7 @@ let cartService = {
   // Thêm item vào giỏ hàng
   addToCart: (cartItem) => {
     return axios({
-      url: `${BASE_URL}/cart`,
+      url: `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CART}`,
       method: "POST",
       data: cartItem, // Gửi trực tiếp cartItem thay vì wrap trong { cartItem: ... }
     });
@@ -30,13 +29,13 @@ let cartService = {
 
   // Cập nhật cart item (số lượng, thông tin)
   updateCartItem: (updatedCartItem, idCart) => {
-    return axios.put(`${BASE_URL}/cart/${idCart}`, updatedCartItem); // Gửi trực tiếp thay vì wrap
+    return axios.put(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CART}/${idCart}`, updatedCartItem); // Gửi trực tiếp thay vì wrap
   },
 
   // Xóa item khỏi giỏ hàng
   deleteById: (idCart) => {
     return axios({
-      url: `${BASE_URL}/cart/${idCart}`,
+      url: `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.CART}/${idCart}`,
       method: "DELETE",
     });
   },

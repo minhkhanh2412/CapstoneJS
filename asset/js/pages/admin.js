@@ -1,4 +1,4 @@
-// Admin Page Logic - Tương tự index.js trong demo ToDoList
+// Admin Page Logic
 
 // === LOADING FUNCTIONS ===
 let turnOnLoading = () => {
@@ -13,7 +13,7 @@ let turnOffLoading = () => {
 let allProducts = []; // Lưu tất cả sản phẩm từ API
 let editingProductId = null; // ID sản phẩm đang được edit
 
-// === FETCH PRODUCTS LIST - Tương tự fetchListTodo ===
+// === FETCH PRODUCTS LIST ===
 let fetchListProducts = () => {
   turnOnLoading();
   productService
@@ -35,7 +35,7 @@ let fetchListProducts = () => {
 // Gọi khi trang load
 fetchListProducts();
 
-// === RENDER PRODUCTS TABLE - Tương tự renderListTodo ===
+// === RENDER PRODUCTS TABLE ===
 let renderProductsTable = (products) => {
   let contentHTML = "";
 
@@ -67,7 +67,7 @@ let formatPrice = (price) => {
   return new Intl.NumberFormat('vi-VN').format(price);
 };
 
-// === DELETE PRODUCT - Tương tự deleteTodo ===
+// === DELETE PRODUCT  ===
 let deleteProduct = (productId) => {
   if (confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
     turnOnLoading();
@@ -88,7 +88,7 @@ let deleteProduct = (productId) => {
   }
 };
 
-// === CREATE PRODUCT - Tương tự createTodo ===
+// === CREATE PRODUCT ===
 let createProduct = () => {
   // Lấy dữ liệu từ form
   const name = document.getElementById("productName").value;
@@ -138,7 +138,7 @@ let createProduct = () => {
     });
 };
 
-// === EDIT PRODUCT - Tương tự editTodo ===
+// === EDIT PRODUCT ===
 let editProduct = (productId) => {
   editingProductId = productId;
   
@@ -171,7 +171,7 @@ let editProduct = (productId) => {
     });
 };
 
-// === UPDATE PRODUCT - Tương tự updateTodo ===
+// === UPDATE PRODUCT ===
 let updateProduct = () => {
   if (!editingProductId) {
     createProduct(); // Nếu không có ID thì tạo mới
@@ -315,3 +315,4 @@ let validateForm = () => {
     saveBtn.disabled = true;
   }
 };
+

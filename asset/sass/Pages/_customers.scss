@@ -1,11 +1,10 @@
 // === CUSTOMERS PAGE STYLES ===
-// Styles riêng cho trang customers (danh sách sản phẩm, giỏ hàng)
 
 body.customers-page {
   background: linear-gradient(135deg, $light-color 0%, lighten($info-color, 35%) 100%);
   min-height: 100vh;
   font-family: $font-family-primary;
-  
+
   // === MAIN CONTAINER ===
   .customers-container {
     padding: $spacing-lg;
@@ -73,7 +72,7 @@ body.customers-page {
     &:hover {
       transform: translateY(-8px) scale(1.02);
       box-shadow: $shadow-2xl;
-      
+
       &::before {
         transform: scaleX(1);
       }
@@ -86,7 +85,7 @@ body.customers-page {
       background: linear-gradient(145deg, $light-color, $white);
       padding: $spacing-sm;
       transition: $transition-base;
-      
+
       &:hover {
         transform: scale(1.02);
       }
@@ -118,7 +117,7 @@ body.customers-page {
 
       // Ẩn thông tin chi tiết - chỉ hiển thị khi click vào card
       .product-screen,
-      .product-camera, 
+      .product-camera,
       .product-front-camera,
       .product-description {
         display: none;
@@ -160,7 +159,7 @@ body.customers-page {
           cursor: not-allowed;
           transform: none;
           box-shadow: none;
-          
+
           &::before {
             display: none;
           }
@@ -251,7 +250,7 @@ body.customers-page {
         }
       }
 
-      input[type="text"], 
+      input[type="text"],
       input[type="search"] {
         @include form-input();
         padding: $spacing-sm $spacing-md;
@@ -289,7 +288,7 @@ body.customers-page {
     &.loading {
       pointer-events: none;
       opacity: 0.7;
-      
+
       &::after {
         @include loading-spinner(20px, $primary-color);
         content: '';
@@ -307,7 +306,7 @@ body.customers-page {
       flex-wrap: wrap;
       justify-content: center;
       gap: $spacing-md;
-      
+
       select {
         width: auto;
         min-width: 140px;
@@ -315,7 +314,7 @@ body.customers-page {
         flex: 1;
       }
 
-      input[type="text"], 
+      input[type="text"],
       input[type="search"] {
         width: auto;
         min-width: 200px;
@@ -336,14 +335,15 @@ body.customers-page {
 
     .product-filters {
       padding: $spacing-md !important;
-      
+
       .filter-group {
         flex-direction: column;
         align-items: stretch;
         gap: $spacing-md;
         flex-wrap: nowrap;
 
-        select, input {
+        select,
+        input {
           width: 100%;
           max-width: none;
         }
@@ -443,7 +443,7 @@ body.customers-page {
     .modal-content {
       background: linear-gradient(145deg, #ffffff, #f8f9fa);
       border-radius: 24px;
-      box-shadow: 
+      box-shadow:
         0 25px 50px rgba(0, 0, 0, 0.25),
         0 0 0 1px rgba(255, 255, 255, 0.05);
       max-width: 900px;
@@ -529,7 +529,7 @@ body.customers-page {
     .product-details-section {
       display: flex;
       flex-direction: column;
-      gap: $spacing-lg;
+      gap: $spacing-sm;
 
       .product-title {
         font-size: 1.5rem;
@@ -563,7 +563,7 @@ body.customers-page {
       .product-specs {
         background: linear-gradient(145deg, #f8f9fa, #ffffff);
         border-radius: 16px;
-        padding: $spacing-lg;
+        padding: $spacing-md;
         border: 1px solid rgba(0, 0, 0, 0.05);
 
         .spec-item {
@@ -643,14 +643,14 @@ body.customers-page {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s ease;
           }
 
           &:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 35px rgba(40, 167, 69, 0.4);
-            
+
             &::before {
               left: 100%;
             }
@@ -686,7 +686,7 @@ body.customers-page {
     .modal-content {
       background: linear-gradient(145deg, #ffffff, #f8f9fa);
       border-radius: 24px;
-      box-shadow: 
+      box-shadow:
         0 25px 50px rgba(0, 0, 0, 0.25),
         0 0 0 1px rgba(255, 255, 255, 0.05);
       max-width: 800px;
@@ -995,7 +995,7 @@ body.customers-page {
     .bill-content {
       background: linear-gradient(145deg, #ffffff, #f8f9fa);
       border-radius: 24px;
-      box-shadow: 
+      box-shadow:
         0 30px 60px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.1);
       max-width: 700px;
@@ -1128,7 +1128,8 @@ body.customers-page {
                 text-align: right;
               }
 
-              &:nth-child(3), &:nth-child(4) {
+              &:nth-child(3),
+              &:nth-child(4) {
                 text-align: center;
               }
             }
@@ -1347,28 +1348,41 @@ body.customers-page {
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes scaleIn {
-    from { 
+    from {
       transform: scale(0.8);
       opacity: 0;
     }
-    to { 
+
+    to {
       transform: scale(1);
       opacity: 1;
     }
   }
 
   @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
       transform: translateY(0);
     }
+
     40% {
       transform: translateY(-10px);
     }
+
     60% {
       transform: translateY(-5px);
     }

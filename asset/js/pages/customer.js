@@ -14,7 +14,7 @@ let allProducts = []; // Lưu tất cả sản phẩm từ API
 let cartItems = []; // Lưu giỏ hàng
 let currentFilter = "all"; // Bộ lọc hiện tại
 
-// === FETCH PRODUCTS - Tương tự fetchListTodo ===
+// === FETCH PRODUCTS ===
 let fetchListProducts = () => {
     turnOnLoading();
     productService
