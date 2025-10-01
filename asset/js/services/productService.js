@@ -1,4 +1,4 @@
-// ProductAPI Service - Tương tự service.js trong demo ToDoList
+// ProductAPI Service
 
 let productService = {
   // Lấy danh sách tất cả sản phẩm
@@ -39,7 +39,7 @@ let productService = {
     });
   },
 
-  // Tìm kiếm sản phẩm (tùy chọn - nếu MockAPI hỗ trợ search)
+  // Tìm kiếm sản phẩm
   searchProducts: (searchTerm) => {
     return axios({
       url: `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.PRODUCTS}?search=${searchTerm}`,

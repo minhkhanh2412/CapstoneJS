@@ -1,5 +1,5 @@
 /**
- * CartItem Model Class - Đại diện cho một item trong giỏ hàng
+ * CartItem Model Class
  * Cấu trúc: { product: Product object, soLuong: number }
  */
 

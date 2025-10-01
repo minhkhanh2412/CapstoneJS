@@ -1,4 +1,4 @@
-// Customer Page Logic - Tương tự index.js trong demo ToDoList
+// Customer Page Logic
 
 // === LOADING FUNCTIONS ===
 let turnOnLoading = () => {
@@ -393,7 +393,7 @@ let refreshCartContent = () => {
         `;
       } else {
         cartItems.forEach(item => {
-          // Cấu trúc mới: item trực tiếp có { product: {...}, soLuong: number }
+          // Cấu trúc: item trực tiếp có { product: {...}, soLuong: number }
           if (item.product && item.soLuong) {
             total += item.product.price * item.soLuong;
             
@@ -480,7 +480,7 @@ let updateQuantity = (cartId, newQuantity) => {
     cartService
         .getById(cartId)
         .then((res) => {
-            let cartData = res.data; // Không cần .cartItem nữa
+            let cartData = res.data; 
             cartData.soLuong = newQuantity;
 
             return cartService.updateCartItem(cartData, cartId);
@@ -667,11 +667,19 @@ let confirmPayment = () => {
     
     // Simulate payment processing
     setTimeout(() => {
+        console.log("🔄 Starting payment process...");
+        
         // Clear toàn bộ giỏ hàng
         cartService
             .clearCart()
             .then(() => {
-                console.log("Thanh toán thành công");
+                console.log("✅ Payment successful - Cart cleared");
+                
+                // Verify cart is actually empty
+                return cartService.getList();
+            })
+            .then((res) => {
+                console.log("📋 Cart verification after payment:", res.data.length, "items remaining");
                 
                 // Đóng bill modal
                 closeCheckoutBill();
@@ -681,15 +689,21 @@ let confirmPayment = () => {
                 
                 // Hiển thị thông báo thành công
                 showPaymentSuccess();
+                
+                // Nếu vẫn còn items, log warning
+                if (res.data.length > 0) {
+                    console.warn("⚠️ Warning: Some items still remain in cart after payment!");
+                    console.warn("Remaining items:", res.data);
+                }
             })
             .catch((err) => {
-                console.error("Lỗi khi xóa giỏ hàng:", err);
+                console.error("❌ Payment failed - Error clearing cart:", err);
                 
                 // Restore button
                 confirmBtn.innerHTML = originalText;
                 confirmBtn.disabled = false;
                 
-                alert("Có lỗi xảy ra trong quá trình thanh toán!");
+                alert("Có lỗi xảy ra trong quá trình thanh toán! Vui lòng thử lại.");
             });
     }, 1500); // Simulate processing time
 };
