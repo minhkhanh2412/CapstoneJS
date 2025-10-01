@@ -8,10 +8,10 @@ let FetchListTodo = () => {
     .then((result) => {
       console.log(result);
 
-      let List = result.data;
+      // let List = result.data;
       todos = result.data;
 
-      RenderList(List);
+      RenderList(todos);
     })
     .catch((err) => {
       console.error("Có lỗi:", err.message);
@@ -51,114 +51,139 @@ let deleteTodo = (idTodo) => {
   })
     .then((result) => {
       FetchListTodo();
-
     })
     .catch((err) => {});
 };
 
-let createTodo=() => {
-    const name = document.getElementById('name').value ;
-    const price = document.getElementById('price').value ;
-    const screen = document.getElementById('screen').value ;
-    const backCamera = document.getElementById('backCamera').value ;
-    const frontCamera = document.getElementById('frontCamera').value ;
-    const img = document.getElementById('img').value ;
-    const desc = document.getElementById('desc').value ;
-    const type = document.getElementById('type').value ;
-    axios({
-        method:'post',
-        url: `${BASE_URL}/todos`,
-        data: {
-            name:name,
-            price:price,
-            screen:screen,
-            backCamera:backCamera,
-            frontCamera:frontCamera,
-            img:img,
-            desc:desc,
-            type:type,
-            
-        }
-    })
+let createTodo = () => {
+  const name = document.getElementById("name").value;
+  const price = document.getElementById("price").value;
+  const screen = document.getElementById("screen").value;
+  const backCamera = document.getElementById("backCamera").value;
+  const frontCamera = document.getElementById("frontCamera").value;
+  const img = document.getElementById("img").value;
+  const desc = document.getElementById("desc").value;
+  const type = document.getElementById("type").value;
+  // Kiểm tra nếu bất kỳ trường nào rỗng
+  if (
+    !name ||
+    !price ||
+    !screen ||
+    !backCamera ||
+    !frontCamera ||
+    !img ||
+    !desc ||
+    !type ||
+    type === "Select brand"
+  ) {
+    alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+  }
+
+  axios({
+    method: "post",
+    url: `${BASE_URL}/todos`,
+    data: {
+      name: name,
+      price: price,
+      screen: screen,
+      backCamera: backCamera,
+      frontCamera: frontCamera,
+      img: img,
+      desc: desc,
+      type: type,
+    },
+  })
     .then((result) => {
-        FetchListTodo();
-        
-        
-    }).catch((err) => {
-        
-    });
-  
-}
-let idEdit=null;
-let editTodo=(idTodo) => {
-     idEdit=idTodo;
-    console.log(idTodo);
-    axios({
-        method:'GET',
-        url: `${BASE_URL}/todos/${idTodo}`,
-        
+      FetchListTodo();
+      var modal = bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("phoneModal")
+      );
+      modal.hide();
     })
+    .catch((err) => {});
+};
+let idEdit = null;
+let editTodo = (idTodo) => {
+  idEdit = idTodo;
+  console.log(idTodo);
+  axios({
+    method: "GET",
+    url: `${BASE_URL}/todos/${idTodo}`,
+  })
     .then((result) => {
-        document.getElementById('name').value= result.data.name;
-    document.getElementById('price').value=result.data.price ;
-    document.getElementById('screen').value =result.data.screen;
-    document.getElementById('backCamera').value=result.data.backCamera ;
-    document.getElementById('frontCamera').value=result.data.frontCamera ;
-    document.getElementById('img').value=result.data.img ;
-    document.getElementById('desc').value=result.data.desc ;
-    document.getElementById('type').value=result.data.type ;
-        
-    }).catch((err) => {
-        
-    });
-    
-}
-
-let saveUpdate=() => {
-    let name = document.getElementById('name').value ;
-    let price = document.getElementById('price').value ;
-    let screen = document.getElementById('screen').value ;
-    let backCamera = document.getElementById('backCamera').value ;
-    let frontCamera = document.getElementById('frontCamera').value ;
-    let img = document.getElementById('img').value ;
-    let desc = document.getElementById('desc').value ;
-    let type = document.getElementById('type').value ;
-    axios({
-        method:'PUT',
-        url: `${BASE_URL}/todos/${idEdit}`,
-        data: {
-            name:name,
-            price:price,
-            screen:screen,
-            backCamera:backCamera,
-            frontCamera:frontCamera,
-            img:img,
-            desc:desc,
-            type:type,
-        }
+      document.getElementById("name").value = result.data.name;
+      document.getElementById("price").value = result.data.price;
+      document.getElementById("screen").value = result.data.screen;
+      document.getElementById("backCamera").value = result.data.backCamera;
+      document.getElementById("frontCamera").value = result.data.frontCamera;
+      document.getElementById("img").value = result.data.img;
+      document.getElementById("desc").value = result.data.desc;
+      document.getElementById("type").value = result.data.type;
     })
+    .catch((err) => {});
+};
+
+let saveUpdate = () => {
+  let name = document.getElementById("name").value;
+  let price = document.getElementById("price").value;
+  let screen = document.getElementById("screen").value;
+  let backCamera = document.getElementById("backCamera").value;
+  let frontCamera = document.getElementById("frontCamera").value;
+  let img = document.getElementById("img").value;
+  let desc = document.getElementById("desc").value;
+  let type = document.getElementById("type").value;
+  // Kiểm tra nếu bất kỳ trường nào rỗng
+  if (
+    !name ||
+    !price ||
+    !screen ||
+    !backCamera ||
+    !frontCamera ||
+    !img ||
+    !desc ||
+    !type ||
+    type === "Select brand"
+  ) {
+    alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+  }
+
+  axios({
+    method: "PUT",
+    url: `${BASE_URL}/todos/${idEdit}`,
+    data: {
+      name: name,
+      price: price,
+      screen: screen,
+      backCamera: backCamera,
+      frontCamera: frontCamera,
+      img: img,
+      desc: desc,
+      type: type,
+    },
+  })
     .then((result) => {
-        FetchListTodo();
-        
-    }).catch((err) => {
-        
-    });
-  
-}
+      FetchListTodo();
+      var modal = bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("phoneModal")
+      );
+      modal.hide();
+    })
+    .catch((err) => {});
+};
 
+let searchPhone = () => {
+  let nameInput = document
+    .getElementById("searchInput")
+    .value.trim()
+    .toLowerCase();
 
+  // lọc danh sách theo xếp loại
+  const ketQua = todos.filter(
+    (item) => item.name && item.name.toLowerCase().includes(nameInput)
+  );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // hiển thị kết quả
+  RenderList(ketQua);
+};
